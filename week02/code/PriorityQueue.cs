@@ -4,7 +4,7 @@
 
     /// <summary>
     /// Add a new value to the queue with an associated priority.  The
-    /// node is always added to the back of the queue regardless of 
+    /// node is always added to the back of the queue regardless of
     /// the priority.
     /// </summary>
     /// <param name="value">The value</param>
@@ -24,14 +24,18 @@
 
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        // Bug fix: Changed from "index < _queue.Count - 1" to "index < _queue.Count"
+        // The -1 was skipping the last element, so highest priority items at the end weren't found
+        for (int index = 1; index < _queue.Count; index++)
         {
             if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
         }
 
         // Remove and return the item with the highest priority
+        // Bug fix: Actually remove the item from the queue after getting its value
         var value = _queue[highPriorityIndex].Value;
+        _queue.RemoveAt(highPriorityIndex);
         return value;
     }
 

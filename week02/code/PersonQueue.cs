@@ -13,7 +13,12 @@ public class PersonQueue
     /// <param name="person">The person to add</param>
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        // Bug fix: Changed from Insert(0, person) to Add(person)
+        // Original bug: Insert(0, person) added items to the front (index 0), making it LIFO (stack-like)
+        // This caused the wrong order - when enqueuing Bob, Tim, Sue, they became [Sue, Tim, Bob]
+        // instead of [Bob, Tim, Sue], so dequeuing returned Sue first instead of Bob
+        // Fix: Add to the end (back) of the queue for proper FIFO behavior
+        _queue.Add(person);
     }
 
     public Person Dequeue()
