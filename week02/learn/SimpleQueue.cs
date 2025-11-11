@@ -28,7 +28,7 @@
         Console.WriteLine(value);
         value = queue.Dequeue();
         Console.WriteLine(value);
-        // Defect(s) Found: 
+        // Defect(s) Found:
 
         Console.WriteLine("------------");
 
@@ -44,7 +44,7 @@
         catch (IndexOutOfRangeException) {
             Console.WriteLine("I got the exception as expected.");
         }
-        // Defect(s) Found: 
+        // Defect(s) Found:
     }
 
     private readonly List<int> _queue = new();
@@ -66,8 +66,10 @@
         if (_queue.Count <= 0)
             throw new IndexOutOfRangeException();
 
-        var value = _queue[1];
-        _queue.RemoveAt(1);
+        // Get the last item (oldest) since Enqueue inserts at index 0
+        // For FIFO queue behavior, we remove from the end
+        var value = _queue[_queue.Count - 1];
+        _queue.RemoveAt(_queue.Count - 1);
         return value;
     }
 }
