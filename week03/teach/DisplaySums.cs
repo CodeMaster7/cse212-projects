@@ -5,7 +5,7 @@
         // 6 4
         // 7 3
         // 8 2
-        // 9 1 
+        // 9 1
 
         Console.WriteLine("------------");
         DisplaySumPairs([-20, -15, -10, -5, 0, 5, 10, 15, 20]);
@@ -28,6 +28,24 @@
     /// </summary>
     /// <param name="numbers">array of integers</param>
     private static void DisplaySumPairs(int[] numbers) {
-        // TODO Problem 2 - This should print pairs of numbers in the given array
+        // HashSet to track numbers we've already seen
+        // Allows O(1) lookup to check if a complement exists
+        var seenNumbers = new HashSet<int>();
+
+        // Loop through each number once - O(n)
+        foreach (var number in numbers) {
+            // Calculate what number would pair with this one to make 10
+            var complement = 10 - number;
+
+            // Check if we've already seen the complement - O(1)
+            if (seenNumbers.Contains(complement)) {
+                // Found a pair! Print it
+                // We print current number first, then complement
+                Console.WriteLine($"{number} {complement}");
+            }
+
+            // Add current number to our "seen" set for future checks - O(1)
+            seenNumbers.Add(number);
+        }
     }
 }

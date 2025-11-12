@@ -14,15 +14,23 @@
     /// <param name="text">Text to check for duplicate letters</param>
     /// <returns>true if all letters are unique, otherwise false</returns>
     private static bool AreUniqueLetters(string text) {
-        // TODO Problem 1 - Replace the O(n^2) algorithm to use sets and O(n) efficiency
-        for (var i = 0; i < text.Length; ++i) {
-            for (var j = 0; j < text.Length; ++j) {
-                // Don't want to compare to yourself ... that will always result in a match
-                if (i != j && text[i] == text[j])
-                    return false;
+        // Create a HashSet to store letters we've seen
+        // A set only stores unique values and has O(1) lookup time
+        var seenLetters = new HashSet<char>();
+
+        // Loop through each character once - O(n)
+        foreach (var letter in text) {
+            // Check if we've already seen this letter - O(1)
+            if (seenLetters.Contains(letter)) {
+                // Found a duplicate! Return false immediately
+                return false;
             }
+
+            // Haven't seen this letter yet, add it to our set - O(1)
+            seenLetters.Add(letter);
         }
 
+        // Made it through the whole string without finding duplicates
         return true;
     }
 }
