@@ -28,7 +28,9 @@
         // The -1 was skipping the last element, so highest priority items at the end weren't found
         for (int index = 1; index < _queue.Count; index++)
         {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+            // Bug fix: Changed from ">=" to ">" to maintain FIFO order for equal priorities
+            // Using >= would always pick the last item when priorities are equal, not the first
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
         }
 

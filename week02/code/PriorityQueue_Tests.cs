@@ -55,5 +55,24 @@ public class PriorityQueueTests
         Assert.AreEqual("First", priorityQueue.Dequeue());
     }
 
+    [TestMethod]
+    // Scenario: When multiple items have the same priority, they should be dequeued in FIFO order
+    // Expected Result: Items with equal priority come out in the order they were added
+    // Defect(s) Found: Using ">=" instead of ">" picks the last item with equal priority, not the first
+    public void TestPriorityQueue_EqualPriority()
+    {
+        var priorityQueue = new PriorityQueue();
+
+        // Add items where some have the same priority (5)
+        priorityQueue.Enqueue("First", 5);
+        priorityQueue.Enqueue("Second", 5);
+        priorityQueue.Enqueue("Third", 5);
+
+        // Should dequeue in FIFO order when priorities are equal
+        Assert.AreEqual("First", priorityQueue.Dequeue(), "First item with priority 5 should come out first");
+        Assert.AreEqual("Second", priorityQueue.Dequeue(), "Second item with priority 5 should come out second");
+        Assert.AreEqual("Third", priorityQueue.Dequeue(), "Third item with priority 5 should come out third");
+    }
+
     // Add more test cases as needed below.
 }
