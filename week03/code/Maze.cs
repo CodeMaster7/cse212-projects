@@ -9,7 +9,7 @@
 /// 'left', 'right', 'up', and 'down' are boolean are represent valid directions
 ///
 /// If a direction is false, then we can assume there is a wall in that direction.
-/// If a direction is true, then we can proceed.  
+/// If a direction is true, then we can proceed.
 ///
 /// If there is a wall, then throw an InvalidOperationException with the message "Can't go that way!".  If there is no wall,
 /// then the 'currX' and 'currY' values should be changed.
@@ -33,6 +33,23 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+
+        // Get the current position's valid moves from the dictionary
+        // The tuple (_currX, _currY) is the key
+        // The bool array has format: [left, right, up, down]
+        var validMoves = _mazeMap[(_currX, _currY)];
+
+        // Index 0 represents "left" direction
+        if (validMoves[0])
+        {
+            // Moving left means decreasing the X coordinate
+            _currX--;
+        }
+        else
+        {
+            // There's a wall! Throw the required exception
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -42,6 +59,20 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+
+        // Get the current position's valid moves
+        var validMoves = _mazeMap[(_currX, _currY)];
+
+        // Index 1 represents "right" direction
+        if (validMoves[1])
+        {
+            // Moving right means increasing the X coordinate
+            _currX++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -51,6 +82,21 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+
+        // Get the current position's valid moves
+        var validMoves = _mazeMap[(_currX, _currY)];
+
+        // Index 2 represents "up" direction
+        if (validMoves[2])
+        {
+            // Moving up means decreasing the Y coordinate
+            // (In this coordinate system, Y increases downward)
+            _currY--;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -60,6 +106,20 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+
+        // Get the current position's valid moves
+        var validMoves = _mazeMap[(_currX, _currY)];
+
+        // Index 3 represents "down" direction
+        if (validMoves[3])
+        {
+            // Moving down means increasing the Y coordinate
+            _currY++;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     public string GetStatus()
