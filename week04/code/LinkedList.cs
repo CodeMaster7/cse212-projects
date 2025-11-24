@@ -126,14 +126,14 @@ public class LinkedList : IEnumerable<int>
     {
         // Search for the node that matches 'value' by starting at the
         // head of the list.
-        Node? curr = _head;
-        while (curr is not null)
+        var node = _head;
+        while (node is not null)
         {
-            if (curr.Data == value)
+            if (node.Data == value)
             {
                 // If the location of 'value' is at the end of the list,
                 // then we can call insert_tail to add 'new_value'
-                if (curr == _tail)
+                if (node == _tail)
                 {
                     InsertTail(newValue);
                 }
@@ -142,16 +142,16 @@ public class LinkedList : IEnumerable<int>
                 else
                 {
                     Node newNode = new(newValue);
-                    newNode.Prev = curr; // Connect new node to the node containing 'value'
-                    newNode.Next = curr.Next; // Connect new node to the node after 'value'
-                    curr.Next!.Prev = newNode; // Connect node after 'value' to the new node
-                    curr.Next = newNode; // Connect the node containing 'value' to the new node
+                    newNode.Prev = node; // Connect new node to the node containing 'value'
+                    newNode.Next = node.Next; // Connect new node to the node after 'value'
+                    node.Next!.Prev = newNode; // Connect node after 'value' to the new node
+                    node.Next = newNode; // Connect the node containing 'value' to the new node
                 }
 
                 return; // We can exit the function after we insert
             }
 
-            curr = curr.Next; // Go to the next node to search for 'value'
+            node = node.Next; // Go to the next node to search for 'value'
         }
     }
 
@@ -172,23 +172,23 @@ public class LinkedList : IEnumerable<int>
     {
         // TODO Problem 3
         // Step 1: Start searching from the head of the list
-        Node? curr = _head;
+        var node = _head;
 
         // Step 2: Loop through each node until we find the value or reach the end
-        while (curr is not null)
+        while (node is not null)
         {
             // Step 3: Check if current node has the value we're looking for
-            if (curr.Data == value)
+            if (node.Data == value)
             {
                 // CASE A: Removing the ONLY node in the list
                 // (node is both head AND tail)
-                if (curr == _head && curr == _tail)
+                if (node == _head && node == _tail)
                 {
                     _head = null;
                     _tail = null;
                 }
                 // CASE B: Removing the HEAD (first node, but there are more nodes after it)
-                else if (curr == _head)
+                else if (node == _head)
                 {
                     // Disconnect second node from current head
                     _head.Next!.Prev = null;
@@ -196,7 +196,7 @@ public class LinkedList : IEnumerable<int>
                     _head = _head.Next;
                 }
                 // CASE C: Removing the TAIL (last node, but there are nodes before it)
-                else if (curr == _tail)
+                else if (node == _tail)
                 {
                     // Disconnect second-to-last node from tail
                     _tail.Prev!.Next = null;
@@ -206,10 +206,10 @@ public class LinkedList : IEnumerable<int>
                 // CASE D: Removing a MIDDLE node (has nodes before AND after it)
                 else
                 {
-                    // Connect the node BEFORE curr to the node AFTER curr
-                    // (essentially "skip over" curr, disconnecting it)
-                    curr.Prev!.Next = curr.Next;
-                    curr.Next!.Prev = curr.Prev;
+                    // Connect the node BEFORE node to the node AFTER node
+                    // (essentially "skip over" node, disconnecting it)
+                    node.Prev!.Next = node.Next;
+                    node.Next!.Prev = node.Prev;
                 }
 
                 // Step 4: Exit after removing the FIRST occurrence
@@ -217,7 +217,7 @@ public class LinkedList : IEnumerable<int>
             }
 
             // Step 5: Move to next node to continue searching
-            curr = curr.Next;
+            node = node.Next;
         }
         // If we get here, value was not found in the list (nothing to remove)
     }
@@ -239,21 +239,21 @@ public class LinkedList : IEnumerable<int>
     {
         // TODO Problem 4
         // Step 1: Start at the beginning of the list
-        Node? curr = _head;
+        var node = _head;
 
         // Step 2: Loop through ENTIRE list (don't stop at first match!)
-        while (curr is not null)
+        while (node is not null)
         {
             // Step 3: If current node has the old value, replace it with new value
-            if (curr.Data == oldValue)
+            if (node.Data == oldValue)
             {
                 // Replace the data in this node
                 // (We DON'T remove/add nodes, just change the value)
-                curr.Data = newValue;
+                node.Data = newValue;
             }
 
             // Step 4: Move to next node (keep searching for more matches)
-            curr = curr.Next;
+            node = node.Next;
         }
         // Note: Unlike Remove(), we DON'T return early - we replace ALL occurrences
     }
