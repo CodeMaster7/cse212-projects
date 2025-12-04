@@ -80,7 +80,24 @@ public class BinarySearchTree : IEnumerable<int>
 
     private void TraverseBackward(Node? node, List<int> values)
     {
-        // TODO Problem 3
+        // TODO Problem 3: Reverse in-order traversal (Right → Root → Left)
+        // This visits nodes in DESCENDING order (largest to smallest)
+
+        // if the node exists, traverse the right subtree, add the node's value to the list, and traverse the left subtree
+        if (node is not null)
+        {
+            // 1. First, visit all nodes on the RIGHT (larger values first)
+            TraverseBackward(node.Right, values);
+
+            // 2. Then, add this node's value to our list
+            values.Add(node.Data);
+
+            // 3. Finally, visit all nodes on the LEFT (smaller values last)
+            TraverseBackward(node.Left, values);
+        }
+
+        // Compare to TraverseForward which does Left → Root → Right
+        // By reversing the order, we get descending instead of ascending
     }
 
     /// <summary>
